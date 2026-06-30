@@ -1,100 +1,152 @@
-class Node {
-    int data;
-    Node next;
-    Node(int data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-public class LinkedList {
-    Node head;
-    public void insert(int data) {
+public class LinkedList 
+{
+    static Node head = null;
+    static void insertFirst(int data) 
+    {
         Node newNode = new Node(data);
-        if (head == null) {
+        newNode.next = head;
+        head = newNode;
+    }
+    static void insertLast(int data) 
+    {
+        Node newNode = new Node(data);
+        if (head == null) 
+        {
             head = newNode;
             return;
         }
         Node temp = head;
-        while (temp.next != null) {
+        while (temp.next != null) 
+        {
             temp = temp.next;
         }
-
         temp.next = newNode;
     }
-    public void display() {
-        if (head == null) {
-            System.out.println("List is empty.");
+    static void insertPosition(int pos, int data) 
+    {
+        if (pos <= 0)
+        {
+            System.out.println("Invalid Position");
+            return;
+        }
+        if (pos == 1) 
+        {
+            insertFirst(data);
             return;
         }
         Node temp = head;
-        while (temp != null) {
-            System.out.print(temp.data + " -> ");
+        for (int i = 1; i < pos - 1 && temp != null; i++)
+        {
             temp = temp.next;
         }
-        System.out.println("null");
+        if (temp == null) 
+        {
+            System.out.println("Invalid Position");
+            return;
+        }
+        Node newNode = new Node(data);
+        newNode.next = temp.next;
+        temp.next = newNode;
     }
-    public void deleteFirst() {
+    static void deleteFirst() 
+    {
         if (head == null) {
-            System.out.println("List is empty.");
+            System.out.println("List is Empty");
             return;
         }
         head = head.next;
     }
-    public void deleteLast() {
-        if (head == null) {
-            System.out.println("List is empty.");
+    static void deleteLast() 
+    {
+        if (head == null) 
+        {
+            System.out.println("List is Empty");
             return;
         }
-        if (head.next == null) {
+        if (head.next == null) 
+        {
             head = null;
             return;
         }
         Node temp = head;
-        while (temp.next.next != null) {
+        while (temp.next.next != null)
+        {
             temp = temp.next;
         }
-
         temp.next = null;
     }
-    public void deletePosition(int position) {
+    static void deletePosition(int pos)
+    {
         if (head == null) {
-            System.out.println("List is empty.");
+            System.out.println("List is Empty");
             return;
         }
-        if (position == 1) {
+        if (pos <= 0) 
+        {
+            System.out.println("Invalid Position");
+            return;
+        }
+        if (pos == 1) 
+        {
             head = head.next;
             return;
         }
         Node temp = head;
-        for (int i = 1; temp != null && i < position - 1; i++) {
+        for (int i = 1; i < pos - 1 && temp != null; i++) 
+        {
             temp = temp.next;
         }
-        if (temp == null || temp.next == null) {
+        if (temp == null || temp.next == null)
+        {
             System.out.println("Invalid Position");
             return;
         }
         temp.next = temp.next.next;
     }
-    public static void main(String[] args) {
-        LinkedList list = new LinkedList();
-        list.insert(10);
-        list.insert(20);
-        list.insert(30);
-        list.insert(40);
-        list.insert(50);
-        System.out.println("Original List:");
-        list.display();
-		
-        list.deleteFirst();
-        System.out.println("\nAfter Deleting First:");
-        list.display();
-		
-        list.deleteLast();
-        System.out.println("\nAfter Deleting Last:");
-        list.display();
+    static void display() 
+    {
+        if (head == null) 
+        {
+            System.out.println("List is Empty");
+            return;
+        }
+        Node temp = head;
+        while (temp != null) 
+        {
+            System.out.print(temp.data + " -> ");
+            temp = temp.next;
+        }
+        System.out.println("null");
+    }
+    public static void main(String[] args) 
+    {
+        System.out.println("Insert Operations");
+        insertFirst(20);
+        insertFirst(10);
+        insertLast(30);
+        insertPosition(3, 25);
+        display();
+        
+        System.out.println("\nDelete First");
+        deleteFirst();
+        display();
 
-        list.deletePosition(2);
-        System.out.println("\nAfter Deleting Position 2:");
-        list.display();
+        System.out.println("\nDelete Last");
+        deleteLast();
+        display();
+
+        System.out.println("\nDelete Position");
+        deletePosition(2);
+        display();
+    }
+}
+class Node 
+{
+    int data;
+    Node next;
+    Node(int data) 
+    {
+        this.data = data;
+        this.next = null;
     }
 }
